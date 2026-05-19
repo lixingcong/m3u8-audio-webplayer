@@ -7,7 +7,9 @@
 
         <style>
             .full-width{ width: 99%; }
+            .large-btn { min-height: 3em; min-width: 5em; padding: 0.4em;}
             select{ width: 10em; }
+            div { padding-top: 0.3em; }
         </style>
 
         <script>
@@ -27,12 +29,9 @@
     </head>
     <body>
         <div>
-            <select id="list" onchange="player.onSelectChanged(this)"></select>
-            <button onclick="player.playSelected()">Play</button>
-            <button onclick="player.stop()" id="stop">Stop</button>
-            <button onclick="player.remove()">Remove</button>
-            <button onclick="player.importList()">Import</button>
-            <button onclick="player.exportList()">Export</button>
+            <select class="large-btn" id="list" onchange="player.onSelectChanged(this)"></select>
+            <button class="large-btn" onclick="player.playSelected()">Play</button>
+            <button class="large-btn" onclick="player.stop()" id="stop">Stop</button>
         </div>
 
         <div>
@@ -46,7 +45,12 @@
         <label>URL<input type="text" class="full-width" id="url"></label>
 
         <div>
-            <button onclick="player.add()">Add To List</button>
+            <button class="large-btn" onclick="player.add()">Add or Update</button>
+            <button class="large-btn" onclick="player.remove()">Remove</button>
+        </div>
+        <div>
+            <button class="large-btn" onclick="player.importList()">Import Settings</button>
+            <button class="large-btn" onclick="player.exportList()">Export Settings</button>
         </div>
 
         <div>
