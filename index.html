@@ -13,7 +13,7 @@
         </style>
 
         <script>
-            const loadScript = (src) => new Promise((resolve, reject) => {
+            const loadScript = async (src) => new Promise((resolve, reject) => {
                 const script = document.createElement('script');
                 script.src = src;
                 script.async = true;
@@ -22,9 +22,11 @@
                 document.head.append(script);
             });
 
-            window.onload = loadScript('hls.js')
-                .then(loadScript('main.js'))
-                .then(() => {player.load()})
+            window.onload = async () => {
+                await loadScript('hls.js')
+                    .then(loadScript('main.js'))
+                    .then(() => {player.load()})
+            }
         </script>
     </head>
     <body>
