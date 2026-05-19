@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>M3U8 Player</title>
+
+        <style>
+            .full-width{ width: 99%; }
+            select{ width: 10em; }
+        </style>
+
+        <script>
+            const loadScript = (src) => new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.async = true;
+                script.onload = () => resolve(script);
+                script.onerror = () => reject(new Error(`Load script error: ${src}`));
+                document.head.append(script);
+            });
+
+            window.onload = loadScript('hls.js')
+                .then(loadScript('main.js'))
+                .then(() => {player.load()})
+        </script>
+    </head>
+    <body>
+        <div>
+            <select id="list" onchange="player.onSelectChanged(this)"></select>
+            <button onclick="player.playSelected()">Play</button>
+            <button onclick="player.stop()" id="stop">Stop</button>
+            <button onclick="player.remove()">Remove</button>
+            <button onclick="player.importList()">Import</button>
+            <button onclick="player.exportList()">Export</button>
+        </div>
+
+        <div>
+            <label><input type="checkbox" id="use-proxy">Use Proxy</label>
+            <button onclick="player.setProxy()">Save Proxy</button>
+        </div>
+        <label><input type="text" class="full-width" id="proxy-prefix"></label>
+
+        <video id="video" autoplay="autoplay" style="display: none;"></video>
+        <label>Name<input type="text" class="full-width" id="name"></label>
+        <label>URL<input type="text" class="full-width" id="url"></label>
+
+        <div>
+            <button onclick="player.add()">Add To List</button>
+        </div>
+
+        <div>
+            <div>Current Playing URL</div>
+            <textarea type="text" class="full-width" id="playing" readonly></textarea>
+        </div>
+    </body>
+</html>
