@@ -29,6 +29,10 @@ player.load = () => {
     }
 
     player.onSelectChanged(document.getElementById('list'))
+
+    useProxyBtn.checked = data.useProxy
+    proxyInput.disabled=!useProxyBtn.checked
+    proxyInput.value = data.proxy
 }
 
 const loadDataFromString = (s, overwrite) => {
@@ -56,14 +60,11 @@ const loadDataFromString = (s, overwrite) => {
 loadDataFromString(localStorage.getItem(key), true)
 //console.log(data)
 
-useProxyBtn.checked = data.useProxy
 useProxyBtn.addEventListener('change', function() {
     data.useProxy = this.checked
     player.save()
     proxyInput.disabled=!this.checked
 })
-proxyInput.disabled=!useProxyBtn.checked
-proxyInput.value = data.proxy
 
 const playUrl = (url) => {
     if (Hls.isSupported()) {
