@@ -1,5 +1,5 @@
 const key = 'data'
-const defaultData = {'proxy': '', 'useProxy': false, 'playlist': {}}
+const defaultData = {'proxy': '', 'useProxy': false, 'playlist': {}, 'playing': ''}
 let data = {}
 let hls = null
 const video = document.getElementById('video')
@@ -24,8 +24,12 @@ player.save = () => {
 player.load = () => {
     const select = document.getElementById('list')
     select.innerHTML = ''
+    let idx = 0
     for (const name in data.playlist) {
         select.add(new Option(name, name))
+        if(name == data.playing)
+            select.selectedIndex = idx
+        ++idx
     }
 
     player.onSelectChanged(document.getElementById('list'))
@@ -112,6 +116,12 @@ player.playSelected = () => {
         const option =  select.options[selected]
         const name  = option.value
         //console.log('try to play', name, data.playlist[name])
+
+        if(name != data.playing){
+            data.playing=name
+            player.save()
+        }
+
         let url = data.playlist[name]
 
         if(data.useProxy && data.proxy.startsWith('http'))
